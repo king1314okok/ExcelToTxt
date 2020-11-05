@@ -1,0 +1,14 @@
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\ExcelToTxt.exe.config
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\ExcelToTxt.exe
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\ExcelToTxt.pdb
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\Spire.XLS.dll
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\Spire.License.dll
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\Spire.Pdf.dll
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\bin\Debug\Microsoft.mshtml.dll
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.csprojAssemblyReference.cache
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.Properties.Resources.resources
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.csproj.GenerateResource.cache
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.csproj.CopyComplete
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.exe
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.pdb
+E:\project\ExcelToTxt\ExcelToTxt\ExcelToTxt\obj\Debug\ExcelToTxt.Form1.resources
