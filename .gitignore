@@ -1,2 +1,6 @@
 .idea
 *.user
+ExcelToTxt/bin/Debug
+ExcelToTxt/obj/Debug
+
+
