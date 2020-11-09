@@ -39,6 +39,10 @@
             this.ui_TxtPathBtn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ui_NewConfigBtn = new System.Windows.Forms.Button();
+            this.ui_ConfigPathBtn = new System.Windows.Forms.Button();
+            this.ui_ConfigPathText = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.ui_FileNameText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.ui_StartBtn = new System.Windows.Forms.Button();
@@ -116,6 +120,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ui_NewConfigBtn);
+            this.groupBox2.Controls.Add(this.ui_ConfigPathBtn);
+            this.groupBox2.Controls.Add(this.ui_ConfigPathText);
+            this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.ui_FileNameText);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.ui_StartBtn);
@@ -128,9 +136,45 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "转换选项";
             // 
+            // ui_NewConfigBtn
+            // 
+            this.ui_NewConfigBtn.Location = new System.Drawing.Point(174, 113);
+            this.ui_NewConfigBtn.Name = "ui_NewConfigBtn";
+            this.ui_NewConfigBtn.Size = new System.Drawing.Size(89, 27);
+            this.ui_NewConfigBtn.TabIndex = 12;
+            this.ui_NewConfigBtn.Text = "新建";
+            this.ui_NewConfigBtn.UseVisualStyleBackColor = true;
+            this.ui_NewConfigBtn.Click += new System.EventHandler(this.ui_NewConfigBtn_Click);
+            // 
+            // ui_ConfigPathBtn
+            // 
+            this.ui_ConfigPathBtn.Location = new System.Drawing.Point(269, 113);
+            this.ui_ConfigPathBtn.Name = "ui_ConfigPathBtn";
+            this.ui_ConfigPathBtn.Size = new System.Drawing.Size(89, 27);
+            this.ui_ConfigPathBtn.TabIndex = 3;
+            this.ui_ConfigPathBtn.Text = "打开";
+            this.ui_ConfigPathBtn.UseVisualStyleBackColor = true;
+            this.ui_ConfigPathBtn.Click += new System.EventHandler(this.ui_ConfigPathBtn_Click);
+            // 
+            // ui_ConfigPathText
+            // 
+            this.ui_ConfigPathText.Location = new System.Drawing.Point(31, 144);
+            this.ui_ConfigPathText.Name = "ui_ConfigPathText";
+            this.ui_ConfigPathText.Size = new System.Drawing.Size(327, 23);
+            this.ui_ConfigPathText.TabIndex = 11;
+            this.ui_ConfigPathText.TextChanged += new System.EventHandler(this.ui_ConfigPathText_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(31, 120);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(87, 20);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "3.类型转换表路径";
+            // 
             // ui_FileNameText
             // 
-            this.ui_FileNameText.Location = new System.Drawing.Point(115, 54);
+            this.ui_FileNameText.Location = new System.Drawing.Point(122, 76);
             this.ui_FileNameText.Name = "ui_FileNameText";
             this.ui_FileNameText.Size = new System.Drawing.Size(235, 23);
             this.ui_FileNameText.TabIndex = 9;
@@ -138,7 +182,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(30, 57);
+            this.label4.Location = new System.Drawing.Point(31, 79);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(87, 20);
             this.label4.TabIndex = 8;
@@ -159,7 +203,7 @@
             // 
             this.ui_KeepNameCheckBox.Checked = true;
             this.ui_KeepNameCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ui_KeepNameCheckBox.Location = new System.Drawing.Point(115, 27);
+            this.ui_KeepNameCheckBox.Location = new System.Drawing.Point(122, 40);
             this.ui_KeepNameCheckBox.Name = "ui_KeepNameCheckBox";
             this.ui_KeepNameCheckBox.Size = new System.Drawing.Size(59, 20);
             this.ui_KeepNameCheckBox.TabIndex = 4;
@@ -167,7 +211,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(30, 28);
+            this.label3.Location = new System.Drawing.Point(30, 42);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 20);
             this.label3.TabIndex = 3;
@@ -219,5 +263,9 @@
         private System.Windows.Forms.Button ui_ExcelPathBtn;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox ui_FileNameText;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox ui_ConfigPathText;
+        private System.Windows.Forms.Button ui_ConfigPathBtn;
+        private System.Windows.Forms.Button ui_NewConfigBtn;
     }
 }

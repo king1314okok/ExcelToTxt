@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Spire.Xls;
@@ -18,13 +19,20 @@ namespace ExcelToTxt
             this.ui_ResultText.Text = "";
         }
         
-        void LoadExcel(string inputPath,string outputPath,bool keepName = true)
+        void LoadExcel(string inputPath,string outputPath,bool keepName,Dictionary<string,Dictionary<string,string>> config)
         {
             Workbook workbook = new Workbook();
             workbook.LoadFromFile(inputPath);
             Worksheet sheet = workbook.Worksheets[0];
             FileStream fs = new FileStream(outputPath, FileMode.Create);
             Encoding utf8 = Encoding.UTF8;
+            
+            string[] columnNames = new string[sheet.Columns.Length];
+            for(int i = 0; i < columnNames.Length; i++)
+            {
+                columnNames[i] = sheet.Columns[i].DisplayedText;
+            }
+            
             int index = keepName ? 0 : 1;
             for (;index < sheet.Rows.Length; index++)
             {
@@ -32,9 +40,15 @@ namespace ExcelToTxt
                 string content = "";
                 for (int i = 0; i < row.Count; i++)
                 {
+                    string item = row.Cells[i].Value;
+                    if (config.ContainsKey(columnNames[i]) && config[columnNames[i]].ContainsKey(item))
+                    {
+                        item = config[columnNames[i]][item];
+                    }
+                    
                     if (i > 0)
                         content += "|";
-                    string item = row.Cells[i].Value.Replace((char) 0x0A, (char) 0x1E).Replace('|', (char) 0x1F);
+                    item = item.Replace((char) 0x0A, (char) 0x1E).Replace('|', (char) 0x1F);
                     content += item;
                 }
 
@@ -47,6 +61,7 @@ namespace ExcelToTxt
 
         void LoadCSV(string inputPath,string outputPath,bool keepName = true)
         {
+            throw new Exception("暂时不能读取CSV");
             using (StreamReader  sr = new StreamReader (inputPath,Encoding.Default))
             {
                 FileStream fs = new FileStream(outputPath, FileMode.Create);
@@ -90,6 +105,15 @@ namespace ExcelToTxt
                 ui_OutputPathText.Text = dialog.SelectedPath;
             }
         }
+        
+        private void ui_ConfigPathBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                ui_ConfigPathText.Text = dialog.FileName;
+            }
+        }
 
         private void ui_StartBtn_Click(object sender, EventArgs e)
         {
@@ -108,6 +132,38 @@ namespace ExcelToTxt
                 return;
             }
 
+            var config = new Dictionary<string, Dictionary<string, string>>();
+            if (configPath != String.Empty)
+            {
+                try
+                {
+                    Workbook workbook = new Workbook();
+                    
+                    workbook.LoadFromFile(configPath);
+                    Worksheet sheet = workbook.Worksheets[0];
+                    if (sheet.Columns.Length != 3)
+                        throw new Exception("配置表格式错误！格式：1、对应列名 2、替换前字符 3、替换后字符");
+                    for (int index = 1;index < sheet.Rows.Length; index++)
+                    {
+                        var row = sheet.Rows[index];
+                        string columnName = row.Cells[0].Value;
+                        string oldValue = row.Cells[1].Value;
+                        string newValue = row.Cells[2].Value;
+                        if(!config.ContainsKey(columnName))
+                            config.Add(columnName,new Dictionary<string, string>());
+                        if(!config.ContainsKey(oldValue))
+                            config[columnName].Add(oldValue,newValue);
+                        else
+                            throw new Exception($"映射表中列({columnName})的OldValue有重复值({oldValue})");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                    return;
+                }
+            }
+
             outputPath = outputPath + "//" + fileName + ".txt";
             FileInfo fileInfo = new FileInfo(inputPath);
             try
@@ -116,7 +172,7 @@ namespace ExcelToTxt
                 if (fileInfo.Extension == ".csv")
                     LoadCSV(inputPath, outputPath,keepName);
                 else
-                    LoadExcel(inputPath, outputPath,keepName);
+                    LoadExcel(inputPath, outputPath,keepName,config);
                 
             }
             catch(Exception ex)
@@ -124,6 +180,50 @@ namespace ExcelToTxt
                 MessageBox.Show(ex.ToString());
             }
             ui_ResultText.Text = "转换成功";
+        }
+
+        string configPath = String.Empty;
+        private void ui_ConfigPathText_TextChanged(object sender, EventArgs e)
+        {
+            if (ui_ConfigPathText.Text.Trim() == String.Empty)
+            {
+                configPath = String.Empty;
+                ui_ResultText.Text = "";
+                return;
+            }
+
+            FileInfo fi = new FileInfo(ui_ConfigPathText.Text);
+            if (!fi.Exists)
+            {
+                ui_ResultText.Text = "类型转换表不存在";
+            }
+            else if(fi.Extension != ".xls" && fi.Extension != ".xlsx")
+            {
+                ui_ResultText.Text = "类型转换表不是excel文件";
+            }
+            else
+            {
+                ui_ResultText.Text = "";
+                configPath = ui_ConfigPathText.Text;
+            }
+        }
+
+        private void ui_NewConfigBtn_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string newConfigPath = dialog.SelectedPath;
+                Workbook workbook = new Workbook();
+                Worksheet sheet = workbook.Worksheets[0];
+                sheet.Range["A1"].Text = "Column";
+                sheet.Range["B1"].Text = "OldValue";
+                sheet.Range["C1"].Text = "NewValue";
+                workbook.SaveToFile(newConfigPath + "/config.xlsx",FileFormat.Version2013);
+                workbook.Dispose();
+                System.Diagnostics.Process.Start(newConfigPath + "/config.xlsx");
+                ui_ConfigPathText.Text = newConfigPath + "\\config.xlsx";
+            }
         }
     }
 }
