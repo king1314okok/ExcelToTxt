@@ -4,7 +4,6 @@ using System.Text;
 using Spire.Xls;
 using System.Windows.Forms;
 
-
 namespace ExcelToTxt
 {
     public partial class Form1 : Form
