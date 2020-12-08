@@ -164,7 +164,7 @@ namespace ExcelToTxt
                 }
             }
 
-            outputPath = outputPath + "//" + fileName + ".txt";
+            outputPath = outputPath + "//" + fileName + ".TXT";
             FileInfo fileInfo = new FileInfo(inputPath);
             try
             {
